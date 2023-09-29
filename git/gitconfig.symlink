@@ -32,3 +32,7 @@
         default = simple
 [init]
 	defaultBranch = master
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
