@@ -5,7 +5,7 @@
         protocol = https
 [alias]
         co = checkout
-        promote = !$ZSH/bin/git-promote
+        promote = !$DOTFILES/bin/git-promote
         count   = !git shortlog -sn
 [color]
         diff = auto
