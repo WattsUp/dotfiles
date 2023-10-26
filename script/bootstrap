@@ -28,15 +28,11 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/gitconfig.local.symlink ]
+  if ! [ -f "$DOTFILES_ROOT/git/gitconfig.local.symlink" ]
   then
     info 'setup gitconfig'
 
     git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
 
     user ' - What is your github author name?'
     read -e git_authorname
@@ -137,20 +133,11 @@ install_dotfiles () {
   done
 }
 
-setup_gitconfig
+#setup_gitconfig
 install_dotfiles
 
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot | while read -r data; do info "$data"; done
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
-  fi
-fi
+mkdir -p ~/Code
+ln -s "$DOTFILES_ROOT" ~/Code/dotfiles
 
 echo ''
 echo '  All installed!'

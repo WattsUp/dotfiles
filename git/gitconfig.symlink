@@ -1,13 +1,15 @@
 # Local/private config goes in the include
 [include]
         path = ~/.gitconfig.local
+[user]
+        name = Bradley Davis
+        email = me@bradleydavis.tech
+        signingkey = 966D9B7DB1139E2B
 [hub]
         protocol = https
 [alias]
         co = checkout
-        promote = !$ZSH/bin/git-promote
-        wtf     = !$ZSH/bin/git-wtf
-        rank-contributors = !$ZSH/bin/git-rank-contributors
+        promote = !$DOTFILES/bin/git-promote
         count   = !git shortlog -sn
 [color]
         diff = auto
@@ -17,6 +19,7 @@
 [core]
         excludesfile = ~/.gitignore
         editor = vim
+	autocrlf = input
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -31,10 +34,9 @@
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
-[credential]
-	helper = osxkeychain
-[diff "spaceman-diff"]
-  command = /opt/homebrew/bin/spaceman-diff
-
 [init]
-	defaultBranch = main
+	defaultBranch = master
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
