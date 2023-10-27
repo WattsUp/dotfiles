@@ -21,6 +21,7 @@ plugins=(
     aliases
     autoenv
     common-aliases
+    isodate
 )
 
 source $ZSH/oh-my-zsh.sh
