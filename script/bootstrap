@@ -136,8 +136,15 @@ install_dotfiles () {
 #setup_gitconfig
 install_dotfiles
 
-mkdir -p ~/Code
-ln -s "$DOTFILES_ROOT" ~/Code/dotfiles
+mkdir -p "$HOME/Code"
+dst="$HOME/Code/dotfiles"
+if [ -d $dst ]
+then
+  success "skipped $dst"
+else
+  ln -s "$DOTFILES_ROOT" "$dst"
+  success "linked $DOTFILES_ROOT to $dst"
+fi
 
 echo ''
 echo '  All installed!'
