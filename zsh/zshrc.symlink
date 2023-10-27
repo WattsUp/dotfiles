@@ -23,6 +23,7 @@ plugins=(
     common-aliases
     isodate
     python
+    systemd
 )
 
 source $ZSH/oh-my-zsh.sh
