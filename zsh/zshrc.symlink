@@ -25,6 +25,7 @@ plugins=(
     python
     systemd
     ubuntu
+    tmux
 )
 
 source $ZSH/oh-my-zsh.sh
