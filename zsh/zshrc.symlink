@@ -18,6 +18,7 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     aliases
+    autoenv
 )
 
 source $ZSH/oh-my-zsh.sh
