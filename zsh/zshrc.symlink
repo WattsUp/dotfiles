@@ -17,6 +17,7 @@ plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
+    aliases
 )
 
 source $ZSH/oh-my-zsh.sh
