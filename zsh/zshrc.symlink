@@ -19,6 +19,7 @@ plugins=(
     zsh-syntax-highlighting
     aliases
     autoenv
+    common-aliases
 )
 
 source $ZSH/oh-my-zsh.sh
