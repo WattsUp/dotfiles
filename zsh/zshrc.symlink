@@ -22,6 +22,7 @@ plugins=(
     autoenv
     common-aliases
     isodate
+    python
 )
 
 source $ZSH/oh-my-zsh.sh
