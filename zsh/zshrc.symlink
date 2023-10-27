@@ -24,6 +24,7 @@ plugins=(
     isodate
     python
     systemd
+    ubuntu
 )
 
 source $ZSH/oh-my-zsh.sh
