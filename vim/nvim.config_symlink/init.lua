@@ -16,6 +16,9 @@ require("core.keymaps")
 require("core.autocommands")
 require("core.usercommands")
 
+Util = require("util")
+Util.plugin.setup()
+
 local opts = {
   checker = { enabled = true }, -- automatically check for plugin updates
   ui = {
