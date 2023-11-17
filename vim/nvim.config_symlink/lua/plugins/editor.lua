@@ -123,6 +123,7 @@ return {
         ["<leader>gh"] = { name = "+hunks" },
         ["<leader>q"] = { name = "+quit/session" },
         ["<leader>s"] = { name = "+search" },
+        ["<leader>sn"] = { name = "+noice" },
         ["<leader>u"] = { name = "+ui" },
         ["<leader>w"] = { name = "+windows" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
@@ -168,7 +169,10 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
-  },
+    keys = {
+      { "<leader>ghs"}, -- Fake so which-key will properly label <leader>gh +hunks
+    },
+ },
   -- Highlight other instances of the word under the cursor
   {
     "RRethy/vim-illuminate",
