@@ -139,7 +139,24 @@ return {
     end,
   },
   -- Icons
-  { "nvim-tree/nvim-web-devicons", lazy = true },
+  {
+    "nvim-tree/nvim-web-devicons",
+    lazy = true,
+    opts = {
+      strict = true,
+      -- TODO Add more missing icons
+      override_by_filename = {
+      },
+      override_by_extension = {
+        ["txt"] = {
+          icon = "",
+          color = "#89e051",
+          cterm_color = "113",
+          name = "Txt",
+        },
+      },
+    },
+  },
   -- UI components
   { "MunifTanjim/nui.nvim", lazy = true },
   -- Dashboard
@@ -149,19 +166,27 @@ return {
     opts = function()
       -- TODO Make a cooler header
       local logo = [[
-        ▗              
-         ▌             
-         ▌             
-         ▐             
-        ▄▄▄▄▄▄▄▄▄      
-       ▐ ▗       ▀▄ ▄▄▀
-        ▀█▀▀▀▀▀▀▀▀▀▜   
-         ▌          ▌  
-        ▞▀▜▀▄▄    ▄▞   
-        ▀▀▀   ▀▀ ▀     
+      |
+      |
+      |
+      |
+      |  ▗              
+      |   ▌             
+      |   ▌             
+      |   ▐             
+      |  ▄▄▄▄▄▄▄▄▄      
+      | ▐ ▗       ▀▄ ▄▄▀
+      |  ▀█▀▀▀▀▀▀▀▀▀▜   
+      |   ▌          ▌  
+      |  ▞▀▜▀▄▄    ▄▞   
+      |  ▀▀▀   ▀▀ ▀     
+      |
       ]]
 
-      logo = string.rep("\n", 4) .. logo .. "\n\n"
+      local header = vim.split(logo, "\n")
+      for i, line in ipairs(header) do
+        header[i] = string.sub(line, 8, #line)
+      end
 
       local opts = {
         theme = "doom",
@@ -169,17 +194,15 @@ return {
           statusline = false,
         },
         config = {
-          header = vim.split(logo, "\n"),
+          header = header,
           center = {
-            -- { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
-            -- { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
-            -- { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "g" },
-            -- { action = [[lua require("lazyvim.util").telescope.config_files()()]], desc = " Config",          icon = " ", key = "c" },
-            -- { action = 'lua require("persistence").load()',                        desc = " Restore Session", icon = " ", key = "s" },
-            -- { action = "LazyExtras",                                               desc = " Lazy Extras",     icon = " ", key = "x" },
-            { action = "Lazy",                                                     desc = " Lazy",            icon = " ", key = "l" },
-            { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
+            { action = "Telescope find_files",              desc = " Find file",       icon = " ", key = "f" },
+            { action = "ene | startinsert",                 desc = " New file",        icon = " ", key = "n" },
+            { action = "Telescope oldfiles",                desc = " Recent files",    icon = " ", key = "r" },
+            { action = "Telescope live_grep",               desc = " Find text",       icon = " ", key = "g" },
+            { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
+            { action = "Lazy",                              desc = " Lazy",            icon = " ", key = "l" },
+            { action = "qa",                                desc = " Quit",            icon = " ", key = "q" },
           },
           footer = function()
             local stats = require("lazy").stats()
