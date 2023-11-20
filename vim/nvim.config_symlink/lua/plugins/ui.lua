@@ -6,6 +6,16 @@ return {
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
+      cmdline = {
+        format = {
+          cmdline = { pattern = "^:", icon = "", lang = "vim" },
+          search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+          search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+          filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
+          lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*", "^:%s*luafile%s+" }, icon = " ", lang = "lua" },
+          help = { pattern = "^:%s*he?l?p?%s+", icon = " " },
+        },
+      },
       lsp = {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -282,6 +292,89 @@ return {
           end)
         end,
       })
+    end,
+  },
+  -- Status line
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- Set an empty status line until lualine loads
+        vim.o.statusline = " "
+      else
+        -- Hide the status line on the starter page
+        vim.o.laststatus = 0
+      end
+    end,
+    opts = function()
+      local icons = Util.icons
+
+      vim.o.laststatus = vim.g.lualine_laststatus
+
+      return {
+        options = {
+          theme = "auto",
+          globalstatus = true,
+          component_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
+          disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch" },
+          lualine_c = {
+            {
+              "diagnostics",
+              symbols = {
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
+              },
+            },
+            { Util.lualine.pretty_path() },
+          },
+          lualine_x = {
+            {
+              function() return require("noice").api.status.command.get() end,
+              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+              color = Util.ui.fg("Statement"),
+            },
+            {
+              "diff",
+              symbols = icons.git,
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
+            { "encoding" },
+            { "fileformat" },
+            {
+              require("lazy.status").updates,
+              cond = require("lazy.status").has_updates,
+              color = Util.ui.fg("Special"),
+            },
+          },
+          lualine_y = {
+            { "progress", separator = " ", padding = { left = 1, right = 0 } },
+            { "location", padding = { left = 0, right = 1 } },
+          },
+          lualine_z = {
+            function()
+              return os.date("%R") .. "  "
+            end,
+          },
+        },
+      }
     end,
   },
 }

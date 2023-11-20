@@ -74,21 +74,7 @@ return {
         modified = {
           symbol = " ",
         },
-        git_status = {
-          symbols = {
-            -- Change type
-            added = " ",
-            modified = " ",
-            deleted = " ",
-            renamed = " ",
-            -- Status type
-            untracked = "",
-            ignored = " ",
-            unstaged = " ",
-            staged = " ",
-            conflict = " ",
-          },
-        },
+        git_status = { symbols = Util.icons.git, },
       },
       event_handlers = {
         {

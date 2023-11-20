@@ -32,7 +32,7 @@ end
 
 M.cache = {}
 
-function M.get()
+function M.get(opts)
   local buf = vim.api.nvim_get_current_buf()
   local ret = M.cache[buf]
   if not ret then
@@ -53,6 +53,9 @@ function M.get()
 
     ret = roots[1] or vim.loop.cwd()
     M.cache[buf] = ret
+  end
+  if opts and opts.normalize then
+    return ret
   end
   return Util.is_win() and ret:gsub("/", "\\") or ret
 end
