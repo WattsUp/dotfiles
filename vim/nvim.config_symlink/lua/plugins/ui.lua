@@ -164,28 +164,32 @@ return {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
     opts = function()
-      -- TODO Make a cooler header
       local logo = [[
       |
       |
+      |     ▗▄                                                       |
+      |      █▖                                                      |
+      |      ▐▙                                                      |
+      |      ▝█                                                      |
+      |       █▌                                                     |
+      |       ▜▌                                                     |
+      |       ▐▌                                                     |
+      |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                          |
+      |    ▟▛▀           ▀▀▀█▄       ▄                               |
+      |    ▜▙▄▟▙            ▗▟█▄▄▟▛▀▀▘            ██▌                |
+      |      ▀█▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▝█        ▄▄▖    ▄▄▖▄▄▖ ▄▄ ▄▄▄  ▗▄▄▄   |
+      |       █▘               █▌       ▝██▖  ▗█▛ ██▌ ██▛▀▀▜█▟▛▀▀██▖ |
+      |      ▐█               ▗█         ▐█▙ ▗██▘ ██▌ ██▌  ▐██   ██▌ |
+      |  ▄█▀▜█▙▖             ▗█▘          ▜█▌▟█▘  ██▌ ██▌  ▐██   ██▌ |
+      | ▐█  ▗▛ ▀▀▜▄▄▄▄    ▄▄█▀             ▜██▌   ██▌ ██▌  ▐██   ██▌ |
+      |  ▀▀▀▀       ▝▀▀▀ ▝▀                 ▀▀    ▀▀▘ ▀▀▘  ▝▀▀   ▀▀▘ |
       |
-      |
-      |  ▗              
-      |   ▌             
-      |   ▌             
-      |   ▐             
-      |  ▄▄▄▄▄▄▄▄▄      
-      | ▐ ▗       ▀▄ ▄▄▀
-      |  ▀█▀▀▀▀▀▀▀▀▀▜   
-      |   ▌          ▌  
-      |  ▞▀▜▀▄▄    ▄▞   
-      |  ▀▀▀   ▀▀ ▀     
       |
       ]]
 
       local header = vim.split(logo, "\n")
       for i, line in ipairs(header) do
-        header[i] = string.sub(line, 8, #line)
+        header[i] = string.sub(line, 8, #line - 1)
       end
 
       local opts = {
