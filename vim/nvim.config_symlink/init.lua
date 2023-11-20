@@ -23,30 +23,7 @@ local opts = {
   checker = { enabled = true }, -- automatically check for plugin updates
   ui = {
     border = "rounded",
-    icons = {
-      cmd = " ",
-      config = " ",
-      event = "",
-      ft = " ",
-      init = " ",
-      import = " ",
-      keys = " ",
-      lazy = " ",
-      loaded = "",
-      not_loaded = "",
-      plugin = " ",
-      runtime = " ",
-      require = " ",
-      source = " ",
-      start = "",
-      task = " ",
-      list = {
-        "",
-        "",
-        "",
-        "‒",
-      },
-    },
+    icons = Util.icons.lazy,
   },
 }
 

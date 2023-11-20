@@ -1,0 +1,32 @@
+return {
+  lazy = {
+    cmd = " ",
+    config = " ",
+    event = "",
+    ft = " ",
+    init = " ",
+    import = " ",
+    keys = " ",
+    lazy = " ",
+    loaded = "",
+    not_loaded = "",
+    plugin = " ",
+    runtime = " ",
+    require = " ",
+    source = " ",
+    start = "",
+    task = " ",
+    list = {
+      "",
+      "",
+      "",
+      "‒",
+    },
+  },
+  diagnostics = {
+    Error = " ",
+    Warn  = " ",
+    Hint  = " ",
+    Info  = " ",
+  },
+}
