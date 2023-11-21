@@ -89,6 +89,7 @@ return {
   -- Keybinding helper
   {
     "folke/which-key.nvim",
+    event = "VeryLazy",
     opts = {
       icons = {
         breadcrumb = "»",
@@ -223,6 +224,7 @@ return {
   -- Fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
+    event = "VeryLazy",
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
