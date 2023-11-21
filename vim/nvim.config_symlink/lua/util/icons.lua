@@ -56,7 +56,7 @@ M.buffer_icon = function()
     return icon, icon_hl
   end
 
-  return "", "DevIconDefault"
+  return " ", "DevIconDefault"
 end
 
 return M

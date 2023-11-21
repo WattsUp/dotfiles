@@ -156,18 +156,39 @@ return {
     lazy = true,
     opts = {
       strict = true,
-      -- TODO Add more missing icons
+      -- TODO: Add more missing icons
       override_by_filename = {
       },
       override_by_extension = {
         ["txt"] = {
-          icon = "",
+          icon = " ",
           color = "#89e051",
           cterm_color = "113",
           name = "Txt",
         },
       },
     },
+    init = function()
+      -- Add a space to every icon
+      local theme = require("nvim-web-devicons.icons-default")
+      for _, icon_data in pairs(theme.icons_by_filename) do
+        icon_data.icon = icon_data.icon .. " "
+      end
+      for _, icon_data in pairs(theme.icons_by_file_extension) do
+        icon_data.icon = icon_data.icon .. " "
+      end
+
+      theme = require("nvim-web-devicons.icons-light")
+      for _, icon_data in pairs(theme.icons_by_filename) do
+        icon_data.icon = icon_data.icon .. " "
+      end
+      for _, icon_data in pairs(theme.icons_by_file_extension) do
+        icon_data.icon = icon_data.icon .. " "
+      end
+
+      local devicons = require("nvim-web-devicons")
+      devicons.set_default_icon(" ", "#6d8086", "66")
+    end,
   },
   -- UI components
   { "MunifTanjim/nui.nvim", lazy = true },

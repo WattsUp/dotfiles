@@ -277,24 +277,6 @@ return {
       { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
       { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
       { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
-      {
-        "<leader>ss",
-        function()
-          require("telescope.builtin").lsp_document_symbols({
-            symbols = require("lazyvim.config").get_kind_filter(),
-          })
-        end,
-        desc = "Goto Symbol",
-      },
-      {
-        "<leader>sS",
-        function()
-          require("telescope.builtin").lsp_dynamic_workspace_symbols({
-            symbols = require("lazyvim.config").get_kind_filter(),
-          })
-        end,
-        desc = "Goto Symbol (Workspace)",
-      },
     },
     opts = function()
       local actions = require("telescope.actions")
@@ -351,23 +333,16 @@ return {
         },
       }
     end,
-    init = function()
-      -- Add an extra space to icons
-      -- Sometimes it'll print funky but close enough, I don't like the small icons
-      local telescope_utils = require("telescope.utils")
-      local original_transform = telescope_utils.transform_devicons
-      telescope_utils.transform_devicons = function(...)
-        local icon_display, icon_highlight, icon = original_transform(...)
-        icon = icon .. " "
-        return icon_display, icon_highlight, icon
-      end
-    end,
   },
   -- Better diagnostics list and others
   {
     "folke/trouble.nvim",
     cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
+    opts = {
+      use_diagnostic_signs = true,
+      fold_open = " ",
+      fold_closed = " ",
+    },
     keys = {
       { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
       { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
@@ -401,6 +376,31 @@ return {
         end,
         desc = "Next trouble/quickfix item",
       },
+    },
+  },
+  {
+    "folke/todo-comments.nvim",
+    cmd = { "TodoTrouble", "TodoTelescope" },
+    event = "LazyFile",
+    config = true,
+    opts = {
+      keywords = {
+        FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      },
+    },
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
   },
 }

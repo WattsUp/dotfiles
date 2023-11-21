@@ -48,7 +48,6 @@ function M.pretty_path(opts)
     end
 
     local icon, icon_hl = Util.icons.buffer_icon()
-    icon = icon .. " "
     local icon_fmt = M.format(self, icon, icon_hl)
 
     return icon_fmt .. table.concat(parts, sep)
