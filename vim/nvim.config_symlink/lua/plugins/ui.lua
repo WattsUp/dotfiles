@@ -22,6 +22,13 @@ return {
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true,
         },
+        progress = {
+          format_done = {
+            { " ", hl_group = "NoiceLspProgressSpinner" },
+            { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+            { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+          },
+        },
       },
       routes = {
         {
@@ -41,6 +48,11 @@ return {
         command_palette = true,
         long_message_to_split = true,
         inc_rename = true,
+      },
+      format = {
+        spinner = {
+          name = "simpleDotsScrolling",
+        },
       },
     },
     keys = {
