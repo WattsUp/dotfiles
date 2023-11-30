@@ -10,11 +10,11 @@ function M.get()
   M._keys = {
     { "<leader>cl", "<cmd>LspInfo<cr>", desc = "LSP Info"},
     { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
-    { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References" },
-    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-    { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
-    { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
-    { "K", vim.lsp.buf.hover, desc = "Hover" },
+    { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References", has = "references" },
+    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration", has = "declaration" },
+    { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation", has = "implementation" },
+    { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition", has = "typeDefinition" },
+    { "K", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
     { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
     { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
     { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
@@ -70,7 +70,7 @@ function M.on_attach(_, buffer)
   local keymaps = M.resolve(buffer)
 
   for _, keys in pairs(keymaps) do
-    if not Keys.has or M.has(buffer, keys.has) then
+    if not keys.has or M.has(buffer, keys.has) then
       local opts = Keys.opts(keys)
       opts.has = nil
       opts.silent = opts.silent ~= false
