@@ -70,3 +70,13 @@ opt.spelllang = { "en" }
 -- Split
 opt.splitright = true
 opt.splitbelow = true
+
+-- Filetypes
+vim.filetype.add({
+  extension = {
+    jinja = "jinja",
+  },
+  -- pattern = {
+  --   ["*.jinja"] = "jinja",
+  -- },
+})

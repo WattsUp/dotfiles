@@ -265,6 +265,30 @@ return {
       end
       require("cmp").setup(opts)
     end,
-  }
-  -- TODO: Add auto completion
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    cmd = { "ConformInfo" },
+    opts = {
+      formatters_by_ft = {
+        jinja = { "djlint" },
+        lua = { "stylua" },
+        python = { "isort", "black" },
+        yaml = { "yamlfmt" },
+      },
+      format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end,
+        mode = "n",
+        desc = "Format buffer",
+      },
+      { "<leader>cc", "<cmd>ConformInfo<cr>", desc = "Conform Info" },
+    },
+  },
 }
