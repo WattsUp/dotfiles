@@ -6,8 +6,11 @@ set -e
 
 DOTFILES=$HOME/.dotfiles
 
+sudo apt update
+
 # find the installers and run them iteratively
 for file in $(find -H "$DOTFILES" -maxdepth 2 -name "install.sh" -not -path "*.git*")
 do
-  sh -c "${file}"
+  printf "\r\033[00;34mRunning ${file}\033[0m\n"
+  sh -e -c "${file}"
 done
