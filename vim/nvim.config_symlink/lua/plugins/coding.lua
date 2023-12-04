@@ -63,7 +63,7 @@ return {
       options = {
         custom_commentstring = function()
           return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
-        end
+        end,
       },
       mappings = {
         comment = "gc",
@@ -188,10 +188,24 @@ return {
         function()
           return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
         end,
-        expr = true, silent = true, mode = "i",
+        expr = true,
+        silent = true,
+        mode = "i",
       },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      {
+        "<tab>",
+        function()
+          require("luasnip").jump(1)
+        end,
+        mode = "s",
+      },
+      {
+        "<s-tab>",
+        function()
+          require("luasnip").jump(-1)
+        end,
+        mode = { "i", "s" },
+      },
     },
   },
   -- Auto completion
@@ -277,7 +291,7 @@ return {
         python = { "isort", "black" },
         yaml = { "yamlfmt" },
       },
-      format_on_save = { timeout_ms = 500, lsp_fallback = true },
+      format_on_save = { timeout_ms = 1000, lsp_fallback = true },
     },
     keys = {
       {
