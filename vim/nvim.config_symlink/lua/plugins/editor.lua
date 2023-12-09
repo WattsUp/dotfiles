@@ -38,7 +38,7 @@ return {
       { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
       {
         "<leader>be",
-        function ()
+        function()
           require("neo-tree.command").execute({
             toggle = true,
             position = "right",
@@ -49,7 +49,7 @@ return {
       },
       {
         "<leader>ge",
-        function ()
+        function()
           require("neo-tree.command").execute({
             toggle = true,
             position = "right",
@@ -74,7 +74,7 @@ return {
         modified = {
           symbol = " ",
         },
-        git_status = { symbols = Util.icons.git, },
+        git_status = { symbols = Util.icons.git },
       },
       event_handlers = {
         {
@@ -151,16 +151,20 @@ return {
         map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
         map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-        map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+        map("n", "<leader>ghb", function()
+          gs.blame_line({ full = true })
+        end, "Blame Line")
         map("n", "<leader>ghd", gs.diffthis, "Diff This")
-        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+        map("n", "<leader>ghD", function()
+          gs.diffthis("~")
+        end, "Diff This ~")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
     keys = {
-      { "<leader>ghs"}, -- Fake so which-key will properly label <leader>gh +hunks
+      { "<leader>ghs" }, -- Fake so which-key will properly label <leader>gh +hunks
     },
- },
+  },
   -- Highlight other instances of the word under the cursor
   {
     "RRethy/vim-illuminate",
@@ -219,7 +223,13 @@ return {
         end,
         desc = "Delete Buffer",
       },
-      { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
+      {
+        "<leader>bD",
+        function()
+          require("mini.bufremove").delete(0, true)
+        end,
+        desc = "Delete Buffer (Force)",
+      },
     },
   },
   -- Fuzzy finder
@@ -382,6 +392,7 @@ return {
     },
   },
   {
+    -- BUG: TODOs with (<author>) aren't highlighed
     "folke/todo-comments.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = "LazyFile",
@@ -398,8 +409,20 @@ return {
       },
     },
     keys = {
-      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous todo comment",
+      },
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
