@@ -38,9 +38,8 @@ if vim.fn.has("nvim-0.10") == 1 then
   opt.smoothscroll = true
 end
 
-
 -- Text
-opt.textwidth = 100
+opt.textwidth = 0
 opt.wrap = false
 opt.linebreak = true
 opt.breakindent = true

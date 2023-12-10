@@ -393,6 +393,7 @@ return {
   },
   {
     -- BUG: TODOs with (<author>) aren't highlighed
+    -- BUG(WattsUp): TODOs with (<author>) aren't highlighed
     "folke/todo-comments.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = "LazyFile",
@@ -406,6 +407,13 @@ return {
         PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
         NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
         TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      },
+      highlight = {
+        -- Pattern to match TODO (<author>):
+        pattern = [[.*<(KEYWORDS)\s*(\(\w+\))?:]],
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)\b]],
       },
     },
     keys = {

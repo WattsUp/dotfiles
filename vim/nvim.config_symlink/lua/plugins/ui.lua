@@ -12,7 +12,11 @@ return {
           search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
           search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
           filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-          lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*", "^:%s*luafile%s+" }, icon = " ", lang = "lua" },
+          lua = {
+            pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*", "^:%s*luafile%s+" },
+            icon = " ",
+            lang = "lua",
+          },
           help = { pattern = "^:%s*he?l?p?%s+", icon = " " },
         },
       },
@@ -56,13 +60,66 @@ return {
       },
     },
     keys = {
-      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
-      { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-      { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-      { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
-      { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll forward", mode = {"i", "n", "s"} },
-      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll backward", mode = {"i", "n", "s"}},
+      {
+        "<S-Enter>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = "c",
+        desc = "Redirect Cmdline",
+      },
+      {
+        "<leader>snl",
+        function()
+          require("noice").cmd("last")
+        end,
+        desc = "Noice Last Message",
+      },
+      {
+        "<leader>snh",
+        function()
+          require("noice").cmd("history")
+        end,
+        desc = "Noice History",
+      },
+      {
+        "<leader>sna",
+        function()
+          require("noice").cmd("all")
+        end,
+        desc = "Noice All",
+      },
+      {
+        "<leader>snd",
+        function()
+          require("noice").cmd("dismiss")
+        end,
+        desc = "Dismiss All",
+      },
+      {
+        "<c-f>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll forward",
+        mode = { "i", "n", "s" },
+      },
+      {
+        "<c-b>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-b>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll backward",
+        mode = { "i", "n", "s" },
+      },
     },
   },
   -- Better `vim.notify()`
@@ -72,7 +129,7 @@ return {
       {
         "<leader>un",
         function()
-          require("notify").dismiss({silent = true, pending = true })
+          require("notify").dismiss({ silent = true, pending = true })
         end,
         desc = "Dismiss all Notifications",
       },
@@ -169,9 +226,20 @@ return {
     opts = {
       strict = true,
       -- TODO: Add more missing icons
-      override_by_filename = {
-      },
+      override_by_filename = {},
       override_by_extension = {
+        ["pem"] = {
+          icon = " ",
+          color = "#cbcb41",
+          cterm_color = "185",
+          name = "Certificate",
+        },
+        ["csv"] = {
+          icon = " ",
+          color = "#89e051",
+          cterm_color = "113",
+          name = "CSV",
+        },
         ["txt"] = {
           icon = " ",
           color = "#89e051",
@@ -251,13 +319,13 @@ return {
         config = {
           header = header,
           center = {
-            { action = "Telescope find_files",              desc = " Find file",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                 desc = " New file",        icon = " ", key = "n" },
-            { action = "Telescope oldfiles",                desc = " Recent files",    icon = " ", key = "r" },
-            { action = "Telescope live_grep",               desc = " Find text",       icon = " ", key = "g" },
+            { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
+            { action = "ene | startinsert", desc = " New file", icon = " ", key = "n" },
+            { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
+            { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
             { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "s" },
-            { action = "Lazy",                              desc = " Lazy",            icon = " ", key = "l" },
-            { action = "qa",                                desc = " Quit",            icon = " ", key = "q" },
+            { action = "Lazy", desc = " Lazy", icon = " ", key = "l" },
+            { action = "qa", desc = " Quit", icon = " ", key = "q" },
           },
           footer = function()
             local stats = require("lazy").stats()
@@ -302,14 +370,18 @@ return {
     },
     opts = {
       options = {
-        close_command = function(n) require("mini.bufremove").delete(n, false) end,
-        right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
+        close_command = function(n)
+          require("mini.bufremove").delete(n, false)
+        end,
+        right_mouse_command = function(n)
+          require("mini.bufremove").delete(n, false)
+        end,
         diagnostics = "nvim_lsp",
         always_show_bufferline = false,
         diagnostics_indicator = function(_, _, diag)
           local icons = Util.icons.diagnostics
           local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-          .. (diag.warning and icons.Warn .. diag.warning or "")
+            .. (diag.warning and icons.Warn .. diag.warning or "")
           return vim.trim(ret)
         end,
         offsets = {
@@ -356,8 +428,8 @@ return {
         options = {
           theme = "auto",
           globalstatus = true,
-          component_separators = { left = '', right = ''},
-          section_separators = { left = '', right = ''},
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
           disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
         },
         sections = {
@@ -377,8 +449,12 @@ return {
           },
           lualine_x = {
             {
-              function() return require("noice").api.status.command.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+              function()
+                return require("noice").api.status.command.get()
+              end,
+              cond = function()
+                return package.loaded["noice"] and require("noice").api.status.command.has()
+              end,
               color = Util.ui.fg("Statement"),
             },
             {
