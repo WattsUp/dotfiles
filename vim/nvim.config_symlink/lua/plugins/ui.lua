@@ -228,6 +228,12 @@ return {
       -- TODO: Add more missing icons
       override_by_filename = {},
       override_by_extension = {
+        ["toml"] = {
+          icon = " ",
+          color = "#9c4221",
+          cterm_color = "166",
+          name = "TOML",
+        },
         ["pem"] = {
           icon = " ",
           color = "#cbcb41",
