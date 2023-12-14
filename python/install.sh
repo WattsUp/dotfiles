@@ -8,4 +8,4 @@ fi
 
 sudo apt install python3.10 python3.10-venv python3.10-dev python3-pip -y
 
-python3 -m pip install pre-commit
+python3 -m pip install pre-commit yamllint
