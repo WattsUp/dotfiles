@@ -22,6 +22,14 @@ return {
       },
     },
   },
+  -- Auto close HTML tags
+  {
+    "alvan/vim-closetag",
+    event = "LazyFile",
+    init = function()
+      vim.g.closetag_filetypes = "html,jinja"
+    end,
+  },
   -- Surround actions
   {
     "echasnovski/mini.surround",

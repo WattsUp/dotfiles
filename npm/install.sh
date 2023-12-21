@@ -11,4 +11,4 @@ export NVM_DIR="$HOME/.nvm"
 nvm install node
 
 # Install linters
-npm install eslint
+npm install eslint --global

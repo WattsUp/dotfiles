@@ -1,6 +1,8 @@
 -- Exit from insert mode
 vim.keymap.set("i", "kj", "<esc>")
 
+-- Add new lines in normal mode
+vim.keymap.set("n", "<Enter>", "o<esc>")
 
 -- Better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
