@@ -258,6 +258,12 @@ return {
           cterm_color = "124",
           name = "Jinja",
         },
+        ["js"] = {
+          icon = " ",
+          color = "#F1F134",
+          cterm_color = "227",
+          name = "Js",
+        },
       },
     },
     init = function()
