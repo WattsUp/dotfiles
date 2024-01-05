@@ -264,6 +264,12 @@ return {
           cterm_color = "227",
           name = "Js",
         },
+        ["svg"] = {
+          icon = " ",
+          color = "#FFB13B",
+          cterm_color = "214",
+          name = "SVG",
+        },
       },
     },
     init = function()
