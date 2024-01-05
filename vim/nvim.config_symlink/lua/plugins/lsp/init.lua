@@ -76,7 +76,6 @@ return {
         return ret
       end
 
-
       for name, icon in pairs(Util.icons.diagnostics) do
         name = "DiagnosticSign" .. name
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
@@ -94,13 +93,13 @@ return {
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
         local fallback = function(diagnostic)
-            local icons = Util.icons.diagnostics
-            for d, icon in pairs(icons) do
-              if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-                return icon
-              end
+          local icons = Util.icons.diagnostics
+          for d, icon in pairs(icons) do
+            if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+              return icon
             end
           end
+        end
         opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●" or fallback
       end
 
@@ -173,6 +172,7 @@ return {
     },
     build = ":MasonUpdate",
     opts = {
+      PATH = "append",
       ensure_installed = {
         "stylua",
         "shfmt",
