@@ -50,6 +50,13 @@ return {
         jsonls = {},
         html = {},
         yamlls = {},
+        clangd = {
+          cmd = {
+            "clangd",
+            "--query-driver=/usr/bin/*",
+          },
+        },
+        cmake = {},
       },
       setup = {},
     },
