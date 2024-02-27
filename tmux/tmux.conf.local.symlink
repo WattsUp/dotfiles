@@ -351,28 +351,31 @@ tmux_conf_copy_to_os_clipboard=false
 # start with mouse mode enabled
 set -g mouse on
 
-# replace C-b by C-a instead of using both prefixes
+# only have control-a as prefix
 set -gu prefix2
 unbind C-a
 unbind C-b
-set -g prefix C-Space
-bind C-Space send-prefix
+set -g prefix C-a
+bind C-a send-prefix
+
+# disable repeat time for faster swap to shell
+set-option -g repeat-time 0
 
 # backtick to jump to marked pane, mark a pane with Prefix + m
 bind \` switch-client -t'{marked}'
 
 # Better split commands
-bind "|" split-window -h -c "#{pane_current_path}"
-bind "\\" split-window -fh -c "#{pane_current_path}"
+bind "\\" split-window -h -c "#{pane_current_path}"
+bind "|" split-window -fh -c "#{pane_current_path}"
 
 bind "-" split-window -v -c "#{pane_current_path}"
 bind "_" split-window -fv -c "#{pane_current_path}"
 
 # Toggle previous window
-bind Space last-window
+bind a last-window
 
 # Toggle previous session
-bind C-Space switch-client -l
+bind C-a switch-client -l
 
 # Resize pane keybindings
 bind -r C-j resize-pane -D 15
