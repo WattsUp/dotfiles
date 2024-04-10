@@ -40,3 +40,5 @@
 	helper = /usr/local/bin/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[credential "https://bitbucket.metro.ad.selinc.com"]
+	provider = bitbucket
