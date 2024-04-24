@@ -42,3 +42,8 @@
 	useHttpPath = true
 [credential "https://bitbucket.metro.ad.selinc.com"]
 	provider = bitbucket
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
