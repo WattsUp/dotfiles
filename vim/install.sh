@@ -5,7 +5,8 @@ set -e
 # ripgrep for searching in vim
 sudo apt install ninja-build gettext cmake unzip curl build-essential ripgrep -y
 cd /var/tmp
-curl -L https://github.com/neovim/neovim/archive/refs/tags/stable.tar.gz -o neovim.tar.gz
+rm -rf neovim-stable
+curl -L htktps://github.com/neovim/neovim/archive/refs/tags/stable.tar.gz -o neovim.tar.gz
 tar -xzvf neovim.tar.gz
 cd neovim-stable && make CMAKE_BUILD_TYPE=RelWithDebInfo
 cd build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
