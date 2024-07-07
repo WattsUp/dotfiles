@@ -19,6 +19,8 @@ else
     ZSH_TMUX_AUTOSTART=true
 fi
 
+export LC_ALL=en_US.UTF-8
+
 plugins=(
     git
     gpg-agent
