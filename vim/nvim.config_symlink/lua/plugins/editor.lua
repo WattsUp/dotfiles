@@ -409,7 +409,7 @@ return {
       },
       highlight = {
         -- Pattern to match TODO (<author>):
-        pattern = [[.*<(KEYWORDS)\s*(\(\w+\))?:]],
+        pattern = [[.*<((KEYWORDS)\s*(\(.+\))?):]],
       },
       search = {
         pattern = [[\b(KEYWORDS)\b]],
