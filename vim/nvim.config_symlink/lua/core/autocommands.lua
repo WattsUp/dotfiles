@@ -85,3 +85,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.tabstop = 2
   end,
 })
+
+-- YAML jinja templates get 2 indent
+vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+  pattern = "*yaml.jinja",
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+  end,
+})
