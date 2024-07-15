@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Auto set indent based on file type
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "markdown" },
+  pattern = { "lua", "markdown", "json" },
   callback = function()
     vim.opt_local.shiftwidth = 2
     vim.opt_local.tabstop = 2
