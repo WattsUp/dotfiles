@@ -96,7 +96,6 @@ return {
         separator = " ",
         group = "+",
       },
-      modes = { n = true, v = true },
     },
     config = function(_, opts)
       local wk = require("which-key")
