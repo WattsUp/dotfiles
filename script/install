@@ -14,3 +14,4 @@ do
   printf "\r\033[00;34mRunning ${file}\033[0m\n"
   sh -e -c "${file}"
 done
+printf "\r\033[00;34mAll done\033[0m\n"
