@@ -273,8 +273,7 @@ return {
         },
       },
     },
-    init = function()
-      -- Add a space to every icon
+    config = function(_, opts)
       local theme = require("nvim-web-devicons.icons-default")
       for _, icon_data in pairs(theme.icons_by_filename) do
         icon_data.icon = icon_data.icon .. " "
@@ -290,9 +289,7 @@ return {
       for _, icon_data in pairs(theme.icons_by_file_extension) do
         icon_data.icon = icon_data.icon .. " "
       end
-
-      local devicons = require("nvim-web-devicons")
-      devicons.set_default_icon(" ", "#6d8086", "66")
+      require("nvim-web-devicons").setup(opts)
     end,
   },
   -- UI components
