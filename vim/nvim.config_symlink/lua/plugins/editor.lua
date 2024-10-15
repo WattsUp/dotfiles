@@ -442,4 +442,9 @@ return {
       vim.fn["mkdp#util#install"]()
     end,
   },
+  {
+    "tigion/nvim-asciidoc-preview",
+    ft = { "asciidoc" },
+    build = "cd server && npm install",
+  },
 }

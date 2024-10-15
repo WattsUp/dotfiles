@@ -271,6 +271,12 @@ return {
           cterm_color = "214",
           name = "SVG",
         },
+        ["adoc"] = {
+          icon = "󰯫 ",
+          color = "#e40046",
+          cterm_color = "161",
+          name = "Asciidoc",
+        },
       },
     },
     config = function(_, opts)
