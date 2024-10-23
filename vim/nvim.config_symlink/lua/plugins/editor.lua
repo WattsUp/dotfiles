@@ -447,4 +447,8 @@ return {
     ft = { "asciidoc" },
     build = "cd server && npm install",
   },
+  {
+    "jedrzejboczar/exrc.nvim",
+    config = true,
+  },
 }
