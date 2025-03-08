@@ -36,10 +36,6 @@
         default = simple
 [init]
 	defaultBranch = master
-[credential]
-	helper = /usr/local/bin/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
 [credential "https://bitbucket.metro.ad.selinc.com"]
 	provider = bitbucket
 [filter "lfs"]
@@ -47,3 +43,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential]
+	helper = 
+	helper = /usr/local/bin/git-credential-manager

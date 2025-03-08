@@ -11,6 +11,7 @@ if [ -d "$FNM_PATH" ]; then
     export PATH="$FNM_PATH:$PATH"
 fi
 fnm install --latest
+eval "$(fnm env --shell bash)"
 
 # Install linters
 npm install eslint --global
