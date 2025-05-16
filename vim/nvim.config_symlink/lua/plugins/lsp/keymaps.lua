@@ -9,50 +9,73 @@ function M.get()
 
   M._keys = {
     { "<leader>cl", "<cmd>LspInfo<cr>", desc = "LSP Info" },
+    { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+    { "gr", vim.lsp.buf.references, desc = "References", nowait = true },
+    { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
+    { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
+    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
     {
-      "gd",
+      "K",
       function()
-        require("telescope.builtin").lsp_definitions({ reuse_win = true })
+        return vim.lsp.buf.hover()
       end,
-      desc = "Goto Definition",
-      has = "definition",
-    },
-    { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References", has = "references" },
-    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration", has = "declaration" },
-    {
-      "gI",
-      function()
-        require("telescope.builtin").lsp_implementations({ reuse_win = true })
-      end,
-      desc = "Goto Implementation",
-      has = "implementation",
+      desc = "Hover",
     },
     {
-      "gy",
+      "gK",
       function()
-        require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+        return vim.lsp.buf.signature_help()
       end,
-      desc = "Goto T[y]pe Definition",
-      has = "typeDefinition",
+      desc = "Signature Help",
+      has = "signatureHelp",
     },
-    { "K", vim.lsp.buf.hover, desc = "Hover", has = "hover" },
-    { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-    -- { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
+    {
+      "<c-k>",
+      function()
+        return vim.lsp.buf.signature_help()
+      end,
+      mode = "i",
+      desc = "Signature Help",
+      has = "signatureHelp",
+    },
     { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
     {
-      "<leader>cA",
+      "<leader>cR",
       function()
-        vim.lsp.buf.code_action({
-          context = {
-            only = {
-              "source",
-            },
-            diagnostics = {},
-          },
-        })
+        Snacks.rename.rename_file()
       end,
+      desc = "Rename File",
+      mode = { "n" },
+      has = { "workspace/didRenameFiles", "workspace/willRenameFiles" },
+    },
+    { "<leader>cr", vim.lsp.buf.rename, desc = "Rename ", has = "rename" },
+    {
+      "<leader>cA",
+      BVim.lsp.action.source,
       desc = "Source Action",
       has = "codeAction",
+    },
+    {
+      "]]",
+      function()
+        Snacks.words.jump(vim.v.count1)
+      end,
+      has = "documentHighlight",
+      desc = "Next Reference",
+      cond = function()
+        return Snacks.words.is_enabled()
+      end,
+    },
+    {
+      "[[",
+      function()
+        Snacks.words.jump(-vim.v.count1)
+      end,
+      has = "documentHighlight",
+      desc = "Prev Reference",
+      cond = function()
+        return Snacks.words.is_enabled()
+      end,
     },
   }
 
@@ -60,8 +83,16 @@ function M.get()
 end
 
 function M.has(buffer, method)
+  if type(method) == "table" then
+    for _, m in ipairs(method) do
+      if M.has(buffer, m) then
+        return true
+      end
+    end
+    return false
+  end
   method = method:find("/") and method or "textDocument/" .. method
-  local clients = require("util").lsp.get_clients({ bufnr = buffer })
+  local clients = BVim.lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
     if client.supports_method(method) then
       return true
@@ -75,10 +106,9 @@ function M.resolve(buffer)
   if not Keys.resolve then
     return {}
   end
-  local Util = require("util")
-  local spec = M.get()
-  local opts = Util.opts("nvim-lspconfig")
-  local clients = Util.lsp.get_clients({ bufnr = buffer })
+  local spec = vim.tbl_extend("force", {}, M.get())
+  local opts = BVim.opts("nvim-lspconfig")
+  local clients = BVim.lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
     local maps = opts.servers[client.name] and opts.servers[client.name].keys or {}
     vim.list_extend(spec, maps)
@@ -91,8 +121,12 @@ function M.on_attach(_, buffer)
   local keymaps = M.resolve(buffer)
 
   for _, keys in pairs(keymaps) do
-    if not keys.has or M.has(buffer, keys.has) then
+    local has = not keys.has or M.has(buffer, keys.has)
+    local cond = not (keys.cond == false or ((type(keys.cond) == "function") and not keys.cond()))
+
+    if has and cond then
       local opts = Keys.opts(keys)
+      opts.cond = nil
       opts.has = nil
       opts.silent = opts.silent ~= false
       opts.buffer = buffer

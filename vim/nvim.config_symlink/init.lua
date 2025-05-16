@@ -11,19 +11,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("core.options")
-require("core.keymaps")
-require("core.autocommands")
-require("core.usercommands")
-
-Util = require("util")
-Util.plugin.setup()
+require("config").setup()
 
 local opts = {
   checker = { enabled = true }, -- automatically check for plugin updates
   ui = {
     border = "rounded",
-    icons = Util.icons.lazy,
+    icons = BVim.config.icons.lazy,
   },
 }
 

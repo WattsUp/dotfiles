@@ -5,6 +5,7 @@ opt.ignorecase = true
 opt.incsearch = true -- incremental
 opt.smartcase = true
 opt.hlsearch = true -- highlight
+opt.completeopt = "menu,menuone,noselect"
 
 -- Indents, spaces
 opt.autoindent = true
@@ -37,6 +38,7 @@ opt.fillchars = {
 if vim.fn.has("nvim-0.10") == 1 then
   opt.smoothscroll = true
 end
+vim.g.snacks_animate = true
 
 -- Text
 opt.textwidth = 0
@@ -45,13 +47,10 @@ opt.linebreak = true
 opt.breakindent = true
 
 -- Folding
-opt.foldcolumn = "1"
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
+opt.foldenable = false
 
 -- Clipboard
-opt.clipboard = "unnamedplus"
+opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
 
 -- Keys
 vim.g.mapleader = " "
@@ -69,3 +68,8 @@ opt.spelllang = { "en" }
 -- Split
 opt.splitright = true
 opt.splitbelow = true
+
+-- Persistent undo
+opt.undofile = true
+opt.undolevels = 10000
+opt.updatetime = 200
