@@ -1,7 +1,9 @@
 #!/bin/sh
 set -e
 
-sudo apt install tig pass
+sudo apt install tig pass git-lfs -y
+
+git lfs install
 
 # Update submodules
 git submodule update --init --recursive
