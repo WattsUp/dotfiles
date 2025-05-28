@@ -1,17 +1,30 @@
 return {
+  {
+    "folke/which-key.nvim",
+    opts = {
+      spec = {
+        { "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
+        { "<bs>", desc = "Decrement Selection", mode = "x" },
+      },
+    },
+  },
   -- Syntax based features
   {
     "nvim-treesitter/nvim-treesitter",
+    version = false,
     build = ":TSUpdate",
-    event = "LazyFile",
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects" },
-    },
+    event = { "LazyFile", "VeryLazy" },
+    lazy = vim.fn.argc(-1) == 0,
+    init = function(plugin)
+      require("lazy.core.loader").add_to_rtp(plugin)
+      require("nvim-treesitter.query_predicates")
+    end,
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
-      { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<c-space>", desc = "Increment Selection" },
+      { "<bs>", desc = "Decrement Selection", mode = "x" },
     },
+    opts_extend = { "ensure_installed" },
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
@@ -32,6 +45,7 @@ return {
         "luap",
         "markdown",
         "markdown_inline",
+        "printf",
         "python",
         "query",
         "regex",
@@ -40,6 +54,7 @@ return {
         "typescript",
         "vim",
         "vimdoc",
+        "xml",
         "yaml",
       },
       incremental_selection = {
@@ -54,33 +69,49 @@ return {
       textobjects = {
         move = {
           enable = true,
-          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
         },
       },
     },
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
-          if added[lang] then
-            return false
-          end
-          added[lang] = true
-          return true
-        end, opts.ensure_installed)
+        opts.ensure_installed = BVim.dedup(opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
-  -- Show context of the current function
   {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = "LazyFile",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
     enabled = true,
-    opts = { mode = "cursor", max_lines = 3 },
+    config = function()
+      if BVim.is_loaded("nvim-treesitter") then
+        local opts = BVim.opts("nvim-treesitter")
+        require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
+      end
+
+      local move = require("nvim-treesitter.textobjects.move")
+      local configs = require("nvim-treesitter.configs")
+      for name, fn in pairs(move) do
+        if name:find("goto") == 1 then
+          move[name] = function(q, ...)
+            if vim.wo.diff then
+              local config = configs.get_module("textobjects.move")[name]
+              for key, query in pairs(config or {}) do
+                if q == query and key:find("[%]%[][cC]") then
+                  vim.cmd("normal! " .. key)
+                  return
+                end
+              end
+            end
+            return fn(q, ...)
+          end
+        end
+      end
+    end,
   },
   -- Automatically close tags in html, js, xml, etc.
   {
