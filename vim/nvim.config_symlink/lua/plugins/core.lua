@@ -66,6 +66,9 @@ return {
         -- Pattern to match TODO (<author>):
         pattern = [[.*<((KEYWORDS)\s*(\(.+\))?):]],
       },
+      search = {
+        pattern = [[\b(KEYWORDS)\b]],
+      },
     },
   },
 }
