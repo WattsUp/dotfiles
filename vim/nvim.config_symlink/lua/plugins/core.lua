@@ -54,6 +54,8 @@ return {
     opts = {
       formatters_by_ft = {
         javascript = { "clang-format" },
+        css = { "prettier" },
+        jinja = { "prettier" },
         python = { "isort", "black" },
       },
     },
