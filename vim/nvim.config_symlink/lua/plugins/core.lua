@@ -53,7 +53,7 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        javascript = { "clang-format" },
+        javascript = { "prettier" },
         css = { "prettier" },
         jinja = { "prettier" },
         python = { "isort", "black" },
