@@ -64,7 +64,6 @@ return {
     "folke/todo-comments.nvim",
     opts = {
       highlight = {
-
         -- Pattern to match TODO (<author>):
         pattern = [[.*<((KEYWORDS)\s*(\(.+\))?):]],
       },
@@ -81,6 +80,12 @@ return {
           enabled = false,
         },
       },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = false },
     },
   },
 }
