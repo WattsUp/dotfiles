@@ -57,6 +57,7 @@ return {
         css = { "prettier" },
         jinja = { "prettier" },
         python = { "isort", "black" },
+        yaml = { "yamlfmt" },
       },
     },
   },
@@ -91,5 +92,14 @@ return {
       opts.inlay_hints = { enabled = false }
       return opts
     end,
+  },
+  {
+    "mason.nvim",
+    opts = {
+      ensure_installed = {
+        "yamlfmt",
+        "yamllint",
+      },
+    },
   },
 }
