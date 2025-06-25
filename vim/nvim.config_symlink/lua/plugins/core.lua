@@ -100,6 +100,7 @@ return {
       ensure_installed = {
         "yamlfmt",
         "yamllint",
+        "prettier",
       },
     },
   },
