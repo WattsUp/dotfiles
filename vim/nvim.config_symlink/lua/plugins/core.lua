@@ -58,6 +58,7 @@ return {
         jinja = { "prettier" },
         python = { "isort", "black" },
         yaml = { "yamlfmt" },
+        toml = { "taplo" },
       },
     },
   },
