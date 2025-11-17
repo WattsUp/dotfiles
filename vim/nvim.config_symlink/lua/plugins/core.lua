@@ -87,13 +87,16 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = { "<c-k>", mode = { "i" }, false }
-
-      opts.inlay_hints = { enabled = false }
-      return opts
-    end,
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            { "<c-k>", mode = { "i" }, false },
+          },
+        },
+      },
+      inlay_hints = { enabled = false },
+    },
   },
   {
     "mason.nvim",
