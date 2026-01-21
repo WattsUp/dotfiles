@@ -2,6 +2,7 @@ vim.g.snacks_animate = false
 
 -- Allow .nvim.lua to be sourced for project specific settings
 vim.opt.exrc = true
+vim.opt.clipboard = "unnamedplus"
 
 if vim.fn.has("wsl") == 1 then
   vim.g.clipboard = {
