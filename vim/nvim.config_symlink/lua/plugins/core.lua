@@ -84,6 +84,9 @@ return {
         },
       },
     },
+    keys = {
+      { "<c-Space>", mode = { "n", "o", "x" }, false },
+    },
   },
   {
     "neovim/nvim-lspconfig",
