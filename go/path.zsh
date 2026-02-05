@@ -1,2 +1,2 @@
 # Add ~/.local/bin/ to PATH
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
