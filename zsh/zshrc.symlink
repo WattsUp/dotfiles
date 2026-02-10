@@ -23,6 +23,18 @@ fi
 
 export LC_ALL=en_US.UTF-8
 
+# all of our zsh files
+typeset -U config_files
+config_files=($DOTFILES/*/*.zsh)
+
+# load the path files before oh-my-zsh
+# So autoenv loads env after
+# Then python's _OLD_VIRTUAL_PATH is correct
+for file in ${(M)config_files:#*/path.zsh}
+do
+  source $file
+done
+
 plugins=(
     git
     gpg-agent
@@ -51,16 +63,6 @@ if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
 fi
-
-# all of our zsh files
-typeset -U config_files
-config_files=($DOTFILES/*/*.zsh)
-
-# load the path files
-for file in ${(M)config_files:#*/path.zsh}
-do
-  source $file
-done
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
