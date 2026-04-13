@@ -11,3 +11,10 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.cmd("setlocal noexpandtab")
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.v" },
+  callback = function()
+    vim.cmd("set filetype=verilog")
+  end,
+})
