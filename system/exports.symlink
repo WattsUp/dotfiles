@@ -1,0 +1,30 @@
+# Core dotfiles path — used by PATH below
+export DOTFILES="$HOME/.dotfiles"
+
+# Editor
+export EDITOR='nvim'
+
+# Git credential store
+export GCM_CREDENTIAL_STORE=gpg
+
+# Locale
+export LC_ALL=en_US.UTF-8
+
+# Project root
+export PROJECTS="$HOME/Code"
+
+# Autoenv leave hooks
+export AUTOENV_ENABLE_LEAVE=1
+
+# Core PATH extensions
+export PATH="./bin:/usr/local/bin:/usr/local/sbin:$DOTFILES/bin:$PATH"
+export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
+
+# Go
+export PATH="/usr/local/go/bin:$PATH"
+
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell bash)"
+fi

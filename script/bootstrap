@@ -154,6 +154,29 @@ else
   success "linked $DOTFILES_ROOT to $dst"
 fi
 
+# Inject ~/.exports sourcing into ~/.zshenv (cargo/argcomplete also write here so no symlink)
+if [ -f "$HOME/.zshenv" ]; then
+  if ! grep -qF 'source "$HOME/.exports"' "$HOME/.zshenv"; then
+    sed -i '1s|^|# Load shared environment (PATH, exports) for all zsh invocations\nsource "$HOME/.exports"\n\n|' "$HOME/.zshenv"
+    success "injected ~/.exports source into ~/.zshenv"
+  else
+    success "skipped ~/.zshenv (already sources ~/.exports)"
+  fi
+else
+  printf '# Load shared environment (PATH, exports) for all zsh invocations\nsource "$HOME/.exports"\n' > "$HOME/.zshenv"
+  success "created ~/.zshenv sourcing ~/.exports"
+fi
+
+# Inject ~/.exports sourcing into ~/.profile so desktop apps (e.g. code.desktop) inherit PATH
+if [ -f "$HOME/.profile" ]; then
+  if ! grep -qF '. "$HOME/.exports"' "$HOME/.profile"; then
+    printf '\n# Load shared environment (PATH, exports) for desktop applications\n. "$HOME/.exports"\n' >> "$HOME/.profile"
+    success "injected ~/.exports source into ~/.profile"
+  else
+    success "skipped ~/.profile (already sources ~/.exports)"
+  fi
+fi
+
 echo ""
 echo "  All installed!"
 echo "  Setup gpg now"

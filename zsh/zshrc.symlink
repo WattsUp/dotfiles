@@ -8,8 +8,7 @@ fi
 # Remove windows paths from PATH
 export PATH=`echo $PATH | tr ':' '\n' | awk '($0!~/mnt\/c/) {print} ' | tr '\n' ':'`
 
-# shortcut to this dotfiles path is $DOTFILES
-export DOTFILES=$HOME/.dotfiles
+# shortcut to this dotfiles path is $DOTFILES (set in ~/.env)
 export ZSH=$DOTFILES/zsh/ohmyzsh
 ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 
@@ -20,8 +19,6 @@ if [[ $(hostname) == "scruffy" ]]; then
 else
     ZSH_TMUX_AUTOSTART=true
 fi
-
-export LC_ALL=en_US.UTF-8
 
 # all of our zsh files
 typeset -U config_files
@@ -61,11 +58,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
-
-
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
@@ -94,5 +86,3 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
-
-export AUTOENV_ENABLE_LEAVE=1
