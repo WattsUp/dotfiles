@@ -9,6 +9,9 @@ description:
 - Use ASCII hyphens `-` not em-dashes `–`
 - UTF-8 Greek letters are fine
 - Do not hallucinate - ask if confused
+- Single space after a period (or other sentence-terminating punctuation), never
+  two. Applies to prose, code comments, docstrings, commit messages, and
+  documentation.
 
 ## After completing a task
 
