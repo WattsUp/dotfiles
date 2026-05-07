@@ -1,0 +1,1 @@
+alias gG='git grep'

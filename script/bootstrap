@@ -9,27 +9,26 @@ set -e
 
 echo ""
 
-info () {
+info() {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
 }
 
-user () {
+user() {
   printf "\r  [ \033[0;33m??\033[0m ] $1\n"
 }
 
-success () {
+success() {
   printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
 }
 
-fail () {
+fail() {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ""
   exit
 }
 
-setup_gitconfig () {
-  if ! [ -f "$DOTFILES_ROOT/git/gitconfig.local.symlink" ]
-  then
+setup_gitconfig() {
+  if ! [ -f "$DOTFILES_ROOT/git/gitconfig.local.symlink" ]; then
     info "setup gitconfig"
 
     git_credential="cache"
@@ -39,31 +38,27 @@ setup_gitconfig () {
     user " - What is your github author email?"
     read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example >git/gitconfig.local.symlink
 
     success "gitconfig"
   fi
 }
 
-
-link_file () {
+link_file() {
   local src=$1 dst=$2
 
   local overwrite= backup= skip=
   local action=
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
-  then
+  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
 
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
-    then
+    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
 
       local currentSrc="$(readlink $dst)"
 
-      if [ "$currentSrc" == "$src" ]
-      then
+      if [ "$currentSrc" == "$src" ]; then
 
-        skip=true;
+        skip=true
 
       else
 
@@ -72,20 +67,26 @@ link_file () {
         read -n 1 action
 
         case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
+        o)
+          overwrite=true
+          ;;
+        O)
+          overwrite_all=true
+          ;;
+        b)
+          backup=true
+          ;;
+        B)
+          backup_all=true
+          ;;
+        s)
+          skip=true
+          ;;
+        S)
+          skip_all=true
+          ;;
+        *)
+          ;;
         esac
 
       fi
@@ -96,49 +97,47 @@ link_file () {
     backup=${backup:-$backup_all}
     skip=${skip:-$skip_all}
 
-    if [ "$overwrite" == "true" ]
-    then
+    if [ "$overwrite" == "true" ]; then
       rm -rf "$dst"
       success "removed $dst"
     fi
 
-    if [ "$backup" == "true" ]
-    then
+    if [ "$backup" == "true" ]; then
       mv "$dst" "${dst}.backup"
       success "moved $dst to ${dst}.backup"
     fi
 
-    if [ "$skip" == "true" ]
-    then
+    if [ "$skip" == "true" ]; then
       success "skipped $src"
     fi
   fi
 
-  if [ "$skip" != "true" ]  # "false" or empty
-  then
+  if [ "$skip" != "true" ]; then # "false" or empty
     ln -s "$1" "$2"
     success "linked $1 to $2"
   fi
 }
 
-install_dotfiles () {
+install_dotfiles() {
   info "installing dotfiles"
 
   mkdir -p "$HOME/.config"
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -not -path "*.git*")
-  do
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -not -path "*.git*"); do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
-  
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.config_symlink" -not -path "*.git*")
-  do
+
+  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.config_symlink" -not -path "*.git*"); do
     dst="$HOME/.config/$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
+
+  # src="$DOTFILES_ROOT/agents"
+  # dst="$HOME/.agents"
+  # link_file "$src" "$dst"
 }
 
 #setup_gitconfig
@@ -146,8 +145,7 @@ install_dotfiles
 
 mkdir -p "$HOME/Code"
 dst="$HOME/Code/dotfiles"
-if [ -d $dst ]
-then
+if [ -d $dst ]; then
   success "skipped $dst"
 else
   ln -s "$DOTFILES_ROOT" "$dst"
@@ -163,14 +161,14 @@ if [ -f "$HOME/.zshenv" ]; then
     success "skipped ~/.zshenv (already sources ~/.exports)"
   fi
 else
-  printf '# Load shared environment (PATH, exports) for all zsh invocations\nsource "$HOME/.exports"\n' > "$HOME/.zshenv"
+  printf '# Load shared environment (PATH, exports) for all zsh invocations\nsource "$HOME/.exports"\n' >"$HOME/.zshenv"
   success "created ~/.zshenv sourcing ~/.exports"
 fi
 
 # Inject ~/.exports sourcing into ~/.profile so desktop apps (e.g. code.desktop) inherit PATH
 if [ -f "$HOME/.profile" ]; then
   if ! grep -qF '. "$HOME/.exports"' "$HOME/.profile"; then
-    printf '\n# Load shared environment (PATH, exports) for desktop applications\n. "$HOME/.exports"\n' >> "$HOME/.profile"
+    printf '\n# Load shared environment (PATH, exports) for desktop applications\n. "$HOME/.exports"\n' >>"$HOME/.profile"
     success "injected ~/.exports source into ~/.profile"
   else
     success "skipped ~/.profile (already sources ~/.exports)"
