@@ -111,6 +111,7 @@ return {
         "prettier",
         "basedpyright",
         "verible",
+        "vtsls",
       },
     },
   },
