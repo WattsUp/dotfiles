@@ -7,14 +7,14 @@ description:
 
 ## Commit policy
 
-Do not create git commits. That is the user's role after reviewing changes.
-
-When creating commit messages (e.g. if asked to draft one), always include the
-Co-authored-by trailer:
+When creating commit messages, always include the Co-authored-by trailer:
 
 ```
 Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 ```
+
+**Never use `git commit --amend`.** Always create a new commit. The user manages
+commit history and rebasing themselves.
 
 ## Respecting user edits
 

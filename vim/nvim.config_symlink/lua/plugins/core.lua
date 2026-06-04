@@ -48,6 +48,9 @@ return {
         },
       },
     },
+    keys = {
+      { "<leader>G", function() Snacks.picker.git_status() end, desc = "Git Status Files" },
+    },
   },
   {
     "stevearc/conform.nvim",

@@ -25,6 +25,23 @@ class BoundingBox(NamedTuple):
     height: float
 ```
 
+**Function return types:** Always use `NamedTuple` instead of a plain tuple when
+a function returns multiple named values. Never use an anonymous
+`tuple[A, B, C]` return type for anything non-trivial:
+
+```python
+# Bad — anonymous tuple return
+def parse(lines: list[str]) -> tuple[bool, list[str], dict[str, bool]]: ...
+
+# Good — NamedTuple return
+class ParseResult(NamedTuple):
+    alarmed: bool
+    units: list[str]
+    forges: dict[str, bool]
+
+def parse(lines: list[str]) -> ParseResult: ...
+```
+
 ## Dicts
 
 Use a plain `dict` only when it is **trivial**: all keys and values are the same
