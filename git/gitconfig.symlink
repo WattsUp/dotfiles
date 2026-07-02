@@ -4,7 +4,7 @@
 [user]
         name = Bradley Davis
         email = me@bradleydavis.tech
-        signingkey = 966D9B7DB1139E2B
+	signingkey = 8D904756AC1E83BD
 [hub]
         protocol = https
 [alias]

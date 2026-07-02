@@ -49,7 +49,13 @@ return {
       },
     },
     keys = {
-      { "<leader>G", function() Snacks.picker.git_status() end, desc = "Git Status Files" },
+      {
+        "<leader>G",
+        function()
+          Snacks.picker.git_status()
+        end,
+        desc = "Git Status Files",
+      },
     },
   },
   {
@@ -63,6 +69,7 @@ return {
         python = { "isort", "black" },
         yaml = { "prettier" },
         toml = { "taplo" },
+        astro = { "prettier" },
       },
     },
   },
