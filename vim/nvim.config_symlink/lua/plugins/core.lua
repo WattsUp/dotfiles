@@ -39,6 +39,12 @@ return {
       dashboard = { preset = { header = table.concat(header, "\n") } },
       picker = {
         sources = {
+          files = {
+            hidden = true,
+          },
+          grep = {
+            hidden = true,
+          },
           explorer = {
             auto_close = true,
             layout = {

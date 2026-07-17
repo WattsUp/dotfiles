@@ -11,7 +11,10 @@ description: >
 - Single space after a period (or other sentence-terminating punctuation), never
   two. Applies everywhere: prose, comments, docstrings, commit messages,
   documentation.
-- Use ASCII hyphens `-` not em-dashes `–`
+- Use ASCII hyphens `-` not em-dashes or en-dashes in code, comments,
+  docstrings, and string literals. Markdown and AsciiDoc prose documents may use
+  them as punctuation.
+- Use ASCII arrows `->` and `<-` not Unicode arrows (`→`, `←`, etc.) in code.
 - UTF-8 Greek letters are fine
 - Use Ohms `Ω` for resistance units and Omega `Ω` for Greek
 
